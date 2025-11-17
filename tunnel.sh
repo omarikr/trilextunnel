@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # --- Configuration ---
-TUNNEL_SERVER="tunnel.trilexhost.com" 
+TUNNEL_SERVER="tunnel.trilexhost.com"  
 TUNNEL_USER="tunneluser"
 CLIENT_KEY_FILE=$(mktemp)
 
 # --- 1. Embed the Private Key ---
+# (Ensure your Private Key is fully pasted here)
 cat << 'EOT' > "$CLIENT_KEY_FILE"
 -----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
@@ -15,11 +16,13 @@ AAAECAU3AWFD0RPEZ6zn9isURtKV9W0VdHgHpapepfail8DpsosKEfKK1OtbnhegWAnlCP
 0Jtle6YkwoSf9pw/mqSrAAAAB0hQQE9tYXIBAgMEBQY=
 -----END OPENSSH PRIVATE KEY-----
 EOT
+
 # Ensure permissions are secure for the key file
 chmod 600 "$CLIENT_KEY_FILE"
 
 # --- 2. Generate Port and Start Tunnel ---
-CLIENT_PORT=$((20000 + RANDOM % 10000))
+# Generates a random port between 3000 and 3999
+CLIENT_PORT=$((3000 + RANDOM % 1000))
 
 echo "Attempting to establish tunnel to ${TUNNEL_SERVER} on port ${CLIENT_PORT}..."
 
